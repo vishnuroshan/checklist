@@ -20,7 +20,7 @@ export default function HomePage() {
     <div className="max-w-2xl mx-auto p-8">
       <div className="flex justify-between items-center mb-8 border-b border-gray-100 pb-6">
         <div>
-          <h1 className="text-xl font-semibold">Checklist Admin</h1>
+          <h1 className="text-xl font-semibold">Checklists</h1>
           <div className="flex gap-4 mt-2">
             <Link
               href="/checklists"
