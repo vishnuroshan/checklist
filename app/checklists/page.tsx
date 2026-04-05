@@ -15,7 +15,7 @@ export default function ChecklistsPage() {
           href="/"
           className="text-sm text-gray-400 hover:text-gray-600 font-medium"
         >
-          Back to Admin
+          Back to Home
         </Link>
       </div>
 

@@ -19,6 +19,7 @@ export default function ChecklistPage({
   const { uid, cid } = use(params);
   const [user, setUser] = useState<User | null>(null);
   const [checklist, setChecklist] = useState<ChecklistType | null>(null);
+  const [progress, setProgress] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -28,8 +29,13 @@ export default function ChecklistPage({
       setLoading(false);
     });
 
-    const unsub = dbClient.subscribeChecklist(cid, setChecklist);
-    return unsub;
+    const unsubCl = dbClient.subscribeChecklist(cid, setChecklist);
+    const unsubProg = dbClient.subscribeUserProgress(uid, cid, setProgress);
+
+    return () => {
+      unsubCl();
+      unsubProg();
+    };
   }, [uid, cid]);
 
   const handleRename = () => {
@@ -56,7 +62,7 @@ export default function ChecklistPage({
     );
   }
 
-  const cStats = checklist ? getChecklistStats(checklist.items || {}) : null;
+  const cStats = checklist ? getChecklistStats(checklist.items || {}, progress) : null;
 
   return (
     <div className="max-w-2xl mx-auto p-8">

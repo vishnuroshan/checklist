@@ -53,7 +53,7 @@ function CreateChecklistForm() {
       <div className="max-w-md mx-auto p-8 text-center">
         <h1 className="text-xl font-semibold mb-6">Create Checklist</h1>
         <p className="text-gray-400 mb-6">You must be logged in as an admin to create checklists.</p>
-        <Link href="/" className="text-blue-600 hover:underline">Back to Admin</Link>
+        <Link href="/" className="text-blue-600 hover:underline">Back to Home</Link>
       </div>
     );
   }

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { dbClient } from "@/lib/db";
-import { getChecklistStats } from "@/lib/analytics";
+import { getChecklistStats, computeExtremes } from "@/lib/analytics";
 import type { User, Checklist, UserProgress, AllUserProgress } from "@/core/db";
 
 export default function UserPage({
@@ -55,6 +55,8 @@ export default function UserPage({
   const sorted = Object.entries(checklists).sort(
     ([, a], [, b]) => b.createdAt - a.createdAt
   );
+
+  const extremes = computeExtremes(checklists, allProgress);
 
   if (loading) {
     return (
@@ -108,6 +110,22 @@ export default function UserPage({
         )}
       </div>
 
+      {extremes && sorted.length > 1 && (
+        <div className="mb-8 p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-col gap-1">
+          <div className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+            Performance Highlights
+          </div>
+          <div className="text-sm text-gray-600">
+            <span className="font-medium text-gray-900 text-xs uppercase tracking-tight">Most Completed:</span>{" "}
+            {extremes.most.name} ({extremes.most.pct}%)
+          </div>
+          <div className="text-sm text-gray-600">
+            <span className="font-medium text-gray-900 text-xs uppercase tracking-tight">Least Completed:</span>{" "}
+            {extremes.least.name} ({extremes.least.pct}%)
+          </div>
+        </div>
+      )}
+
       {sorted.length === 0 ? (
         <div className="text-center py-12 border-2 border-dashed border-gray-100 rounded-xl">
           <p className="text-gray-400">No checklists yet.</p>
@@ -133,7 +151,7 @@ export default function UserPage({
       )}
       <div className="mt-8 flex justify-center">
         <Link href="/" className="text-sm text-gray-400 hover:text-gray-600">
-          Back to Admin
+          Back to Home
         </Link>
       </div>
     </div>
