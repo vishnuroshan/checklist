@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   description: "Real-time shared checklist app",
 };
 
+import NotesSidebar from "@/components/NotesSidebar";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -19,7 +21,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={geistSans.variable}>
-      <body>{children}</body>
+      <body className="antialiased text-gray-900 bg-white selection:bg-blue-100 min-h-screen">
+        <div className="flex h-screen overflow-hidden">
+          {/* Main Content */}
+          <main className="flex-1 overflow-y-auto bg-white relative">
+            <div className="max-w-4xl mx-auto">
+              {children}
+            </div>
+          </main>
+
+          {/* Persistent Notes Sidebar */}
+          <div className="hidden lg:block border-l border-gray-100">
+            <NotesSidebar />
+          </div>
+        </div>
+      </body>
     </html>
   );
 }

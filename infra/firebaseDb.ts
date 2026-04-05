@@ -15,6 +15,7 @@ import type {
   ChecklistItem,
   UserProgress,
   AllUserProgress,
+  GlobalNote,
 } from "@/core/db";
 
 export const firebaseRealtimeDb: RealtimeDB = {
@@ -139,5 +140,24 @@ export const firebaseRealtimeDb: RealtimeDB = {
     const r = ref(db, `users/${uid}/progress`);
     const unsubscribe = onValue(r, (s) => cb(s.val() || {}));
     return unsubscribe;
+  },
+
+  subscribeGlobalNotes(cb: (notes: Record<string, GlobalNote>) => void) {
+    const db = getDb();
+    const r = ref(db, "global/notes");
+    const unsubscribe = onValue(r, (s) => cb(s.val() || {}));
+    return unsubscribe;
+  },
+
+  async addGlobalNote(text: string): Promise<string> {
+    const db = getDb();
+    const r = push(ref(db, "global/notes"));
+    await set(r, { text, createdAt: Date.now() });
+    return r.key!;
+  },
+
+  async deleteGlobalNote(nid: string): Promise<void> {
+    const db = getDb();
+    await remove(ref(db, `global/notes/${nid}`));
   },
 };

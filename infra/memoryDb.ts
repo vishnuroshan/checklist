@@ -6,6 +6,7 @@ import type {
   Unsubscribe,
   UserProgress,
   AllUserProgress,
+  GlobalNote,
 } from "@/core/db";
 
 type Listener<T> = (data: T) => void;
@@ -13,9 +14,11 @@ type Listener<T> = (data: T) => void;
 const store: {
   users: Record<string, User & { progress?: AllUserProgress }>;
   checklists: Record<string, Checklist>;
+  notes: Record<string, GlobalNote>;
 } = {
   users: {},
   checklists: {},
+  notes: {},
 };
 
 const listeners = {
@@ -28,6 +31,7 @@ const listeners = {
   checklist: new Map<string, Set<Listener<Checklist | null>>>(),
   userProgress: new Map<string, Set<Listener<UserProgress>>>(),
   allUserProgress: new Map<string, Set<Listener<AllUserProgress>>>(),
+  notes: new Set<Listener<Record<string, GlobalNote>>>(),
 };
 
 function notifyUsers() {
@@ -41,6 +45,10 @@ function notifyUsers() {
 
 function notifyChecklists() {
   listeners.checklists.forEach((cb) => cb({ ...store.checklists }));
+}
+
+function notifyNotes() {
+  listeners.notes.forEach((cb) => cb({ ...store.notes }));
 }
 
 function notifyItems(cid: string) {
@@ -266,5 +274,25 @@ export const memoryDb: RealtimeDB = {
     return () => {
       listeners.allUserProgress.get(uid)?.delete(cb);
     };
+  },
+
+  subscribeGlobalNotes(cb: (notes: Record<string, GlobalNote>) => void): Unsubscribe {
+    listeners.notes.add(cb);
+    cb({ ...store.notes });
+    return () => {
+      listeners.notes.delete(cb);
+    };
+  },
+
+  async addGlobalNote(text: string): Promise<string> {
+    const id = crypto.randomUUID();
+    store.notes[id] = { text, createdAt: Date.now() };
+    notifyNotes();
+    return id;
+  },
+
+  async deleteGlobalNote(nid: string): Promise<void> {
+    delete store.notes[nid];
+    notifyNotes();
   },
 };

@@ -18,6 +18,11 @@ export interface Checklist {
   items?: Record<string, ChecklistItem>;
 }
 
+export interface GlobalNote {
+  text: string;
+  createdAt: number;
+}
+
 export interface RealtimeDB {
   createUser(name: string): Promise<string>;
   getUser(uid: string): Promise<User | null>;
@@ -60,4 +65,8 @@ export interface RealtimeDB {
     uid: string,
     cb: (progress: AllUserProgress) => void
   ): Unsubscribe;
+
+  subscribeGlobalNotes(cb: (notes: Record<string, GlobalNote>) => void): Unsubscribe;
+  addGlobalNote(text: string): Promise<string>;
+  deleteGlobalNote(nid: string): Promise<void>;
 }
