@@ -9,7 +9,7 @@ export default function ChecklistsPage() {
       <div className="flex justify-between items-center mb-8 border-b border-gray-100 pb-6">
         <div>
           <h1 className="text-xl font-semibold">All Checklists</h1>
-          <p className="text-sm text-gray-400">Manage and view all system checklists</p>
+          <p className="text-sm text-gray-400">Manage and view all checklists</p>
         </div>
         <Link
           href="/"
