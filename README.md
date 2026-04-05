@@ -21,6 +21,7 @@ npm install
 Create a `.env.local` file in the root directory and add your Firebase credentials:
 ```env
 NEXT_PUBLIC_DB_PROVIDER=firebase
+// NEXT_PUBLIC_DB_PROVIDER=memory
 
 NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
