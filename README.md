@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Checklist App
+
+A real-time, collaborative checklist application built with Next.js and Firebase.
+
+## Features
+
+- **Real-time Synchronization**: Check/uncheck items and see updates instantly across all users.
+- **Admin Dashboard**: Manage users and checklists with a secret password (`12345`).
+- **Tiered Analytics**: Publicly view checklist mastery while keeping user performance metrics private for admins.
+- **Shared Activity Feed**: A permanent notes sidebar where anyone can post and pin important updates.
 
 ## Getting Started
 
-First, run the development server:
-
+### 1. Installation
+Install the project dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configuration
+Create a `.env.local` file in the root directory and add your Firebase credentials:
+```env
+NEXT_PUBLIC_DB_PROVIDER=firebase
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_DATABASE_URL=https://your_project_id.firebaseio.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### Database Providers
+- **`firebase`**: Connects to the real database for global, persistent sync. You need actual firebase credentials to use this provider. You can get them from [Firebase Console](https://console.firebase.google.com/) and add them in the .env.local file.
+- **`memory`**: Ignores all Firebase credentials and uses a temporary in-memory store. **Note: All data will be cleared upon a browser refresh.** This is recommended for rapid development or testing purposes.
 
-## Learn More
+### 3. Running Locally
+Start the development server:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Visit [http://localhost:3000](http://localhost:3000) to view the application.
