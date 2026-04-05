@@ -68,7 +68,7 @@ export default function HomePage() {
 
       <section>
         <h2 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-4">
-          Active Users
+          Users
         </h2>
         <UserList />
       </section>
