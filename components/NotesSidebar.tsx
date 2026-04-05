@@ -25,9 +25,9 @@ export default function NotesSidebar() {
   const handlePost = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newNote.trim()) return;
-    
+
     const text = newNote.trim();
-    setNewNote(""); 
+    setNewNote("");
     await dbClient.addGlobalNote(text);
   };
 
@@ -98,7 +98,7 @@ export default function NotesSidebar() {
   return (
     <aside className="w-80 h-screen sticky top-0 border-l border-gray-200 bg-gray-50 flex flex-col shrink-0 overflow-hidden">
       <div className="p-4 border-b border-gray-200 bg-white">
-        <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Shared Activity</h2>
+        <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Shared Notes</h2>
       </div>
 
       {pinnedNotes.length > 0 && (
@@ -120,11 +120,11 @@ export default function NotesSidebar() {
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth">
         {sortedNotes.length === 0 ? (
-          <p className="text-gray-400 italic text-xs text-center py-8">No shared activity yet.</p>
+          <p className="text-gray-400 italic text-xs text-center py-8">No shared notes yet.</p>
         ) : (
           sortedNotes.map(([id, note]) => (
-            <div 
-              key={id} 
+            <div
+              key={id}
               ref={el => { noteRefs.current[id] = el; }}
               className={`group relative border rounded-lg p-3 shadow-sm hover:shadow transition-all ${note.pinned ? 'bg-blue-50/30 border-blue-100' : 'bg-white border-gray-100'}`}
             >
@@ -180,7 +180,7 @@ export default function NotesSidebar() {
             disabled={!newNote.trim()}
             className="bg-gray-100 text-gray-600 py-1.5 rounded text-[11px] font-bold uppercase tracking-widest hover:bg-blue-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
-            Post Activity
+            Send
           </button>
         </form>
       </div>
