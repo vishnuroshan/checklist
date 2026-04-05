@@ -160,4 +160,9 @@ export const firebaseRealtimeDb: RealtimeDB = {
     const db = getDb();
     await remove(ref(db, `global/notes/${nid}`));
   },
+
+  async togglePinGlobalNote(nid: string, pinned: boolean): Promise<void> {
+    const db = getDb();
+    await update(ref(db, `global/notes/${nid}`), { pinned });
+  },
 };

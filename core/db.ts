@@ -21,6 +21,7 @@ export interface Checklist {
 export interface GlobalNote {
   text: string;
   createdAt: number;
+  pinned?: boolean;
 }
 
 export interface RealtimeDB {
@@ -69,4 +70,5 @@ export interface RealtimeDB {
   subscribeGlobalNotes(cb: (notes: Record<string, GlobalNote>) => void): Unsubscribe;
   addGlobalNote(text: string): Promise<string>;
   deleteGlobalNote(nid: string): Promise<void>;
+  togglePinGlobalNote(nid: string, pinned: boolean): Promise<void>;
 }

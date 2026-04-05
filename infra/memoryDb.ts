@@ -295,4 +295,11 @@ export const memoryDb: RealtimeDB = {
     delete store.notes[nid];
     notifyNotes();
   },
+
+  async togglePinGlobalNote(nid: string, pinned: boolean): Promise<void> {
+    if (store.notes[nid]) {
+      store.notes[nid].pinned = pinned;
+      notifyNotes();
+    }
+  },
 };
